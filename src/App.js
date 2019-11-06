@@ -151,6 +151,7 @@ class App extends React.Component{
             isVisible = {this.state.cartModalIsVisible}
             orders = {this.state.orders}
             onHide = {this.hideCartModal}
+            updateOrders = {this.updateOrders}
           />
       </div>
     );

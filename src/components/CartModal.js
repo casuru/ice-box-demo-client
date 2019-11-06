@@ -12,7 +12,7 @@ class CartModal extends React.Component{
         const authToken = localStorage.getItem("iceboxAuthToken");
 
         const payload = JSON.stringify({
-
+            status:'c'
         });
 
         const response = await fetch(endpoint, {
@@ -22,12 +22,20 @@ class CartModal extends React.Component{
                 'Content-Type': 'application/json',
                 'Authorization': 'Token ' + authToken
             }
-        })
+        });
+
+        if(response.status === 200){
+
+            this.props.onHide();
+
+            return;
+        }
+        
     }
 
     render(){
 
-        console.log(this.props.orders)
+        
 
         const orderForms = this.props.orders.map((order) => (
             <OrderForm
@@ -35,6 +43,7 @@ class CartModal extends React.Component{
                 order = {order.id}
                 size = {order.size}
                 quantity = {order.quantity}
+                updateOrders = {this.props.updateOrders}
             />
         ));
 
@@ -47,8 +56,8 @@ class CartModal extends React.Component{
                     {orderForms}
                 </Modal.Body>
                 <Modal.Footer>
-                    {this.props.orders.length > 0 && <Button onPress = {this.onCheckOut}>Check Out</Button>}
-
+                    {this.props.orders.length > 0 && <Button onClick = {this.onCheckOut}>Check Out</Button>}
+                    <Button onClick = {this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );

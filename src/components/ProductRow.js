@@ -21,7 +21,8 @@ class ProductRow extends React.Component {
         const payload = JSON.stringify({
             product: this.props.id,
             size: this.refs.sizeInput.value,
-            quantity: 1
+            quantity: 1,
+            action: 'add'
         });
 
         const response = await fetch(endpoint, {

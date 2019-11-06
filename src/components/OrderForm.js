@@ -96,12 +96,31 @@ class OrderForm extends React.Component{
     }
 
 
+
     removeItemFromCart = async() => {
 
         const authToken = localStorage.getItem('iceboxAuthToken');
         const endpoint = config.root + 'cart/';
 
-        console.log("Remove");
+        const payload = JSON.stringify({
+            product: this.props.productId,
+            size: this.props.size,
+            action: 'remove'
+        });
+
+        const response = await fetch(endpoint, {
+            method:'POST',
+            body: payload,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token ' + authToken
+              }
+        });
+
+        const responseJson = await response.json();
+
+        this.props.updateOrders(responseJson.order_set);
+
     }
 
     render(){
